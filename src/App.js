@@ -1,22 +1,53 @@
 import React, { Component } from 'react';
 import RandomUser from './Components/RandomUser';
-import UserData from './userData';
 import './App.css';
 
 class App extends Component {
   state = {
-    userData: UserData
+    userData: [],
   };
 
+  loadData = async () =>{
+    const response = await fetch('https://randomuser.me/api/?results=6');
+    const data = await response.json();
+    return data;
+  }
+
+  handleClick = async () => {
+    const userData = await this.loadData();
+    
+      this.setState({
+        userData: userData.results,
+      });
+  }
+
+  async componentDidMount(){
+    const userData = await this.loadData();
+    
+      this.setState({
+        userData: userData.results,
+      });
+    
+  }
+
   render(){
+    const { userData } = this.state;
   return (
     <div className="App">
       <header className="App-header">
         <h1>Random User App</h1>
       </header>
-      <RandomUser userData={this.state.userData.results[0]} />
+      <button onClick={this.handleClick}>Load more users</button>
+      {this.state.userData.length ? (
+        <RandomUser userData={userData} />
+      ):(
+        <p> No User Data Loaded!</p>
+      
+      )}
+      
     </div>
-  )};
-}
+  );
+  }
+};
 
 export default App;

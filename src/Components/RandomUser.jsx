@@ -4,16 +4,17 @@ import './RandomUser.css';
 const RandomUser = props => {
     const { userData } = props;
     return(
-        <div className='user-card'>
-            <img src={userData.picture.large} alt={`${userData.name.first} ${userData.name.last}`}/>
+        <ul>
+            {userData.map((user) => (
+        <li className='user-card' key={user.login.uuid}>
+            <img src={user.picture.large} alt={`${user.name.first} ${user.name.last}`}/>
             <p>
-                {userData.name.first} {userData.name.last}
+                {user.name.first} {user.name.last}
             </p>
-            <ul>
-                <li>{userData.cell}</li>
-                
-            </ul>
-        </div>
+            
+            </li>
+            ))}
+        </ul>
     )
 
 
