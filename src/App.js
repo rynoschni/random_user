@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import RandomUser from './Components/RandomUser';
+
+import 'bulma/css/bulma.css';
 import './App.css';
+import { Container, Columns, Column } from 'bloomer';
+
+import RandomUser from './Components/RandomUser';
 
 class App extends Component {
   state = {
@@ -34,17 +38,22 @@ class App extends Component {
     const { userData } = this.state;
   return (
     <div className="App">
+      <Container isFluid>
       <header className="App-header">
         <h1>Random User App</h1>
       </header>
       <button onClick={this.handleClick}>Load more users</button>
+      <Columns isCentered>
       {this.state.userData.length ? (
-        <RandomUser userData={userData} />
+        <Column isSize='1/3'>
+          <RandomUser userData={userData} />
+        </Column>
       ):(
-        <p> No User Data Loaded!</p>
+        <Column isSize='full'> No User Data Loaded!</Column>
       
       )}
-      
+      </Columns>
+      </Container>
     </div>
   );
   }
